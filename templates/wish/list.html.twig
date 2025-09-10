@@ -3,5 +3,17 @@
 {% block title %}Wish List{% endblock %}
 
 {% block body %}
-All wishes
+<h1>All wishes</h1>
+
+<div class="list-group">
+    {% for wish in wishes %}
+        <a href="{{ path('wish_show', {'id': wish.id}) }}" 
+           class="list-group-item list-group-item-action" 
+           title="Détail du voeu">
+           {{ wish.title }}
+        </a>
+    {% else %}
+        <p>Aucune donnée dans la base.</p>
+    {% endfor %}
+</div>
 {% endblock %}

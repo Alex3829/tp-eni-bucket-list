@@ -1,11 +1,24 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-   Wish title | {{ parent() }}
+   {{ wish.title }} | {{ parent() }}
 {% endblock %}
 
 {% block body %}
-    <h1>Wish title</h1>
-
+<div class="container my-4">
+    <div class="card shadow-sm" style="background-color: rgb(234, 221, 191); border-color: rgb(123, 143, 100);">
+        <div class="card-header" style="background-color: rgb(123, 143, 100); color: white;">
+            <h2 class="card-title mb-0">{{ wish.title }}</h2>
+        </div>
+        <div class="card-body">
+            <p class="text-muted">Date de création : {{ wish.dateCreated | date('d/m/Y') }}</p>
+            
+            {% if wish.description %}
+                <p class="card-text">{{ wish.description }}</p>
+            {% else %}
+                <p class="card-text text-muted"><em>Pas de description disponible.</em></p>
+            {% endif %}
+        </div>
+    </div>
+</div>
 {% endblock %}
-
