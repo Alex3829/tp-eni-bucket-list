@@ -18,6 +18,21 @@
             {% else %}
                 <p class="card-text text-muted"><em>Pas de description disponible.</em></p>
             {% endif %}
+
+            <div class="mt-4 d-flex gap-2">
+                <a href="{{ path('wish_modify_form', {'id': wish.id}) }}" 
+                   class="btn btn-warning"
+                   title="Modify your wish">
+                    Modify
+                </a>
+
+                <a href="{{ path('wish_delete', {'id': wish.id}) }}" 
+                   class="btn btn-danger"
+                   onclick="return confirm('Do you confirm the delete ?');"
+                   title="Delete your wish">
+                   Delete
+                </a>
+            </div>
         </div>
     </div>
 </div>
