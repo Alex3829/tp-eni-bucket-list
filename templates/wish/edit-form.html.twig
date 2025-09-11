@@ -1,12 +1,29 @@
 {% extends 'base.html.twig' %}
-{% block title %} Wish update form {% endblock %}
+{% block title %}
+	Wish update form
+{% endblock %}
 
 {% block body %}
-    <h1>Update your wish !</h1>
-    <div>
-        {{ form_start(editForm) }}
-        {{ form_widget(editForm) }}
-        <button type="submit" class="btn btn-primary btn-sm">Update</button>
-        {{ form_end(editForm) }}
-    </div>
+	<h1>Update your wish !</h1>
+	<div>
+		{{ form_start(editForm, {'attr': {'enctype': 'multipart/form-data'}}) }}
+
+		{{ form_row(editForm.title) }}
+		{{ form_row(editForm.description) }}
+		{{ form_row(editForm.author) }}
+
+		{# Affichage et suppression de l'image #}
+		{% if wish.imageName %}
+			<p class="card-text">
+				<img src="{{ asset('uploads/img/' ~ wish.imageName) }}" alt="Wish image" class="img-fluid mx-auto d-block" style="max-width: 300px;">
+			</p>
+			{{ form_row(editForm.deleteImage) }}
+		{% endif %}
+
+		{# Upload de l'image #}
+		{{ form_row(editForm.image) }}
+
+		<button type="submit" class="btn btn-primary btn-sm">Update</button>
+		{{ form_end(editForm) }}
+	</div>
 {% endblock %}

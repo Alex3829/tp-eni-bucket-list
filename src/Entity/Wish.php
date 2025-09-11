@@ -24,7 +24,7 @@ class Wish
     #[ORM\Column(length: 50)]
     private ?string $author = null;
 
-    #[ORM\Column(options:['default'=>false])]
+    #[ORM\Column(options: ['default' => false])]
     private ?bool $isPublished = null;
 
     #[ORM\Column]
@@ -33,11 +33,14 @@ class Wish
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $dateUpdated = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imageName = null;
+
 
     public function __construct()
     {
         $this->dateCreated = new \DateTimeImmutable();
-        $this->isPublished =false;
+        $this->isPublished = false;
     }
 
     public function getId(): ?int
@@ -113,6 +116,18 @@ class Wish
     public function setDateUpdated(\DateTimeImmutable $dateUpdated): static
     {
         $this->dateUpdated = $dateUpdated;
+
+        return $this;
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+
+    public function setImageName(?string $imageName): static
+    {
+        $this->imageName = $imageName;
 
         return $this;
     }

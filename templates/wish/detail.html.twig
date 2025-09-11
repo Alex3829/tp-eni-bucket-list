@@ -1,39 +1,45 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-   {{ wish.title }} | {{ parent() }}
+	{{ wish.title }}
+	|
+	{{ parent() }}
 {% endblock %}
 
 {% block body %}
-<div class="container my-4">
-    <div class="card shadow-sm" style="background-color: rgb(234, 221, 191); border-color: rgb(123, 143, 100);">
-        <div class="card-header" style="background-color: rgb(123, 143, 100); color: white;">
-            <h2 class="card-title mb-0">{{ wish.title }}</h2>
-        </div>
-        <div class="card-body">
-            <p class="text-muted">Date de création : {{ wish.dateCreated | date('d/m/Y') }}</p>
-            
-            {% if wish.description %}
-                <p class="card-text">{{ wish.description }}</p>
-            {% else %}
-                <p class="card-text text-muted"><em>Pas de description disponible.</em></p>
-            {% endif %}
+	<div class="container my-4 d-flex justify-content-center">
+		<div class="card shadow-sm text-center" style="background-color: rgb(234, 221, 191); border-color: rgb(123, 143, 100); width: 100%; max-width: 600px;">
+			<div class="card-header" style="background-color: rgb(123, 143, 100); color: white;">
+				<h2 class="card-title mb-0">{{ wish.title }}</h2>
+			</div>
+			<div class="card-body">
+				<p class="text-muted">Date de création :
+					{{ wish.dateCreated | date('d/m/Y') }}</p>
 
-            <div class="mt-4 d-flex gap-2">
-                <a href="{{ path('wish_modify_form', {'id': wish.id}) }}" 
-                   class="btn btn-warning"
-                   title="Modify your wish">
-                    Modify
-                </a>
+				{% if wish.description %}
+					<p class="card-text">{{ wish.description }}</p>
+				{% else %}
+					<p class="card-text text-muted">
+						<em>Pas de description disponible.</em>
+					</p>
+				{% endif %}
 
-                <a href="{{ path('wish_delete', {'id': wish.id}) }}" 
-                   class="btn btn-danger"
-                   onclick="return confirm('Do you confirm the delete ?');"
-                   title="Delete your wish">
-                   Delete
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
+				{% if wish.imageName %}
+					<p class="card-text">
+						<img src="{{ asset('uploads/img/' ~ wish.imageName) }}" alt="Wish image" class="img-fluid mx-auto d-block" style="max-width: 300px;">
+					</p>
+				{% endif %}
+
+				<div class="mt-4 d-flex justify-content-center gap-2">
+					<a href="{{ path('wish_modify_form', {'id': wish.id}) }}" class="btn btn-warning" title="Modify your wish">
+						Modify
+					</a>
+
+					<a href="{{ path('wish_delete', {'id': wish.id}) }}" class="btn btn-danger" onclick="return confirm('Do you confirm the delete ?');" title="Delete your wish">
+						Delete
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}
