@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\Wish;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Event\PreSetDataEvent;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -13,7 +15,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-
 
 class WishType extends AbstractType
 {
@@ -30,6 +31,12 @@ class WishType extends AbstractType
             ->add('author', TextType::class, [
                 'label' => 'Your username'
             ])
+            ->add('category', EntityType::class, [
+                'label' => 'Category',
+                'class' => Category::class,
+                'choice_label' => 'name',
+                'placeholder' => '-- Choose a category --'
+            ])
             ->add('image', FileType::class, [
                 'label' => 'Image',
                 'required' => false,
@@ -42,19 +49,22 @@ class WishType extends AbstractType
                     ]),
                 ],
             ])
-            ->addEventListener(FormEvents::PRE_SET_DATA, function (PreSetDataEvent $event): void {
-                $wish = $event->getData();
-                $form = $event->getForm();
+            ->addEventListener(
+                FormEvents::PRE_SET_DATA,
+                function (PreSetDataEvent $event): void {
+                    $wish = $event->getData();
+                    $form = $event->getForm();
 
-                if ($wish->getImageName()) {
-                    $form->add('deleteImage', CheckboxType::class, [
-                        'label' => 'Delete image',
-                        'required' => false,
-                        'mapped' => false,
-                        'value' => false
-                    ]);
+                    if ($wish->getImageName()) {
+                        $form->add('deleteImage', CheckboxType::class, [
+                            'label' => 'Delete image',
+                            'required' => false,
+                            'mapped' => false,
+                            'value' => false
+                        ]);
+                    }
                 }
-            });
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver): void

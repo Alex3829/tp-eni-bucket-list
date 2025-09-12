@@ -13,15 +13,14 @@
 				<h2 class="card-title mb-0">{{ wish.title }}</h2>
 			</div>
 			<div class="card-body">
+				{% if wish.category.id %}
+					<p class="card-text badge bg-secondary">{{ wish.category.name }}</p>
+				{% endif %}
 				<p class="text-muted">Date de création :
 					{{ wish.dateCreated | date('d/m/Y') }}</p>
 
 				{% if wish.description %}
 					<p class="card-text">{{ wish.description }}</p>
-				{% else %}
-					<p class="card-text text-muted">
-						<em>Pas de description disponible.</em>
-					</p>
 				{% endif %}
 
 				{% if wish.imageName %}

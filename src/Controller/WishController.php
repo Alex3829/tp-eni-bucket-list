@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use App\Entity\Category;
 
 
 #[Route('/wish', name: 'wish_')]
@@ -47,6 +48,7 @@ final class WishController extends AbstractController
         #[Autowire('%kernel.project_dir%/public/uploads/img')] string $imageDirectory
     ): Response {
         $wish = new Wish();
+        $categories = $em->getRepository(Category::class)->findAll();
         $createForm = $this->createForm(WishType::class, $wish);
 
         $createForm->handleRequest($request);

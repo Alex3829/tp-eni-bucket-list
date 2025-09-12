@@ -8,12 +8,13 @@
 <div class="list-group">
     {% for wish in wishes %}
         <a href="{{ path('wish_show', {'id': wish.id}) }}" 
-           class="list-group-item list-group-item-action" 
+           class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" 
            title="Détail du voeu">
-           {{ wish.title }}
+           
+           <span>{{ wish.title }}</span>
+           <span class="badge bg-secondary">{{ wish.category.name }}</span>
         </a>
-    {% else %}
-        <p>Aucune donnée dans la base.</p>
     {% endfor %}
 </div>
+
 {% endblock %}
