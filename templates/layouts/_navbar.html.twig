@@ -15,12 +15,31 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{{ path('wish_list')}}">All wishes</a>
         </li>
+
+        {% if app.user %}
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{{ path('wish_create_form')}}">Add yours</a>
         </li>
+				{% endif %}
+
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{{ path('main_about_us')}}">About us</a>
         </li>
+
+        {# Partie authentification #}
+        	{% if app.user %}
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{{ path('app_logout')}}">Logout</a>
+        </li>
+        	{% else  %}
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{{ path('app_register')}}">Register</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{{ path('app_login')}}">Login</a>
+        </li>
+				{% endif %}
+
       </ul>
     </div>
   </div>

@@ -54,7 +54,8 @@ final class WishController extends AbstractController
         $createForm->handleRequest($request);
 
         if ($createForm->isSubmitted() && $createForm->isValid()) {
-
+            $user = $this->getUser();
+            $wish->setUser($user);
             $image = $createForm->get('image')->getData();
 
 
