@@ -33,9 +33,10 @@ security:
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
+    # Note: sans le $ il y a une faille de sécurité, en terminant pas celui-ci cela indique qua la route ne prend pas d'autres paramètres derrière = REGEX
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/wish/create, roles: ROLE_USER }
+        - { path: ^/wish/create$, roles: ROLE_USER }
 
 when@test:
     security:

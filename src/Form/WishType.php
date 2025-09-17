@@ -46,6 +46,10 @@ class WishType extends AbstractType
                     ]),
                 ],
             ])
+            ->add('comment', TextareaType::class, [
+                'label' => 'Comment it',
+                // 'required' => false
+            ])
             ->addEventListener(
                 FormEvents::PRE_SET_DATA,
                 function (PreSetDataEvent $event): void {
