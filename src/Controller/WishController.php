@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Wish;
 use App\Form\WishType;
+use App\Service\Censurator;
 use App\Repository\WishRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,6 +21,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route('/wish', name: 'wish_')]
 final class WishController extends AbstractController
 {
+
     #[Route('/list', name: "list", methods: ['GET'])]
     public function list(WishRepository $wishRepository): Response
     {
@@ -45,11 +47,13 @@ final class WishController extends AbstractController
         Request $request,
         EntityManagerInterface $em,
         SluggerInterface $slugger,
+        Censurator $censurator,
         #[Autowire('%kernel.project_dir%/public/uploads/img')] string $imageDirectory
     ): Response {
         $wish = new Wish();
         $categories = $em->getRepository(Category::class)->findAll();
         $createForm = $this->createForm(WishType::class, $wish);
+
 
         $createForm->handleRequest($request);
 
@@ -72,6 +76,9 @@ final class WishController extends AbstractController
 
                 $wish->setImageName($newFilename);
             }
+
+            $censuredDescription = $censurator->purify($wish->getDescription());
+            $wish->setDescription($censuredDescription);
 
             $em->persist($wish);
             $em->flush();

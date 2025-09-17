@@ -1,0 +1,14 @@
+{
+    "mots_interdits": [
+        "violence",
+        "haine",
+        "drogue",
+        "racisme",
+        "terrorisme",
+        "insulte",
+        "pornographie",
+        "arnaque",
+        "suicide",
+        "meurtre"
+    ]
+}
