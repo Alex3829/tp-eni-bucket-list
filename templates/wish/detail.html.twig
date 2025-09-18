@@ -31,14 +31,14 @@
 					</p>
 				{% endif %}
 
-				{% if app.user and  app.user == wish.user  %}
+				{% if is_granted('wish_edit', wish)  %}
 					<div class="mt-4 d-flex justify-content-center gap-2">
 						<a href="{{ path('wish_modify_form', {'id': wish.id}) }}" class="btn btn-warning" title="Modify your wish">
 							Modify
 						</a>
 					{% endif %}
 
-					{% if app.user and (is_granted('ROLE_USER') and  app.user == wish.user) or is_granted('ROLE_ADMIN')   %}
+					{% if is_granted('wish_delete', wish)   %}
 						<a href="{{ path('wish_delete', {'id': wish.id}) }}" class="btn btn-danger" onclick="return confirm('Do you confirm the delete ?');" title="Delete your wish">
 							Delete
 						</a>

@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Wish;
 use App\Form\WishType;
-use App\Service\Censurator;
 use App\Repository\WishRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -95,7 +94,7 @@ final class WishController extends AbstractController
     }
 
     #[Route('/{id}/modify', name: "modify_form", methods: ['GET', 'POST'])]
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted('wish_edit', 'wish', 'Vous n\'avez pas l\'autorisation', 404)]
     public function update(
         Wish $wish,
         Request $request,
@@ -141,9 +140,9 @@ final class WishController extends AbstractController
         return $this->redirectToRoute('wish_show', ['id' => $wish->getId()]);
     }
 
-    #[IsGranted('ROLE_USER', 'ROLE_ADMIN')]
     #[Route('/{id}/delete', name: 'delete', requirements: ['id' => '\d+'], methods: ['GET'])]
-    public function delete(int $id, WishRepository $wishRepository, EntityManagerInterface $em): Response
+    #[IsGranted('wish_delete', 'wish', 'Vous n\'avez pas l\'autorisation', 404)]
+    public function delete(int $id, Wish $wish, WishRepository $wishRepository, EntityManagerInterface $em): Response
     {
         $wish = $wishRepository->find($id);
         if (!$wish) {
