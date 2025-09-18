@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use App\Entity\Category;
+use App\Service\CensuratorService;
 use Dom\Comment;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -47,7 +48,7 @@ final class WishController extends AbstractController
         Request $request,
         EntityManagerInterface $em,
         SluggerInterface $slugger,
-        Censurator $censurator,
+        CensuratorService $censurator,
         #[Autowire('%kernel.project_dir%/public/uploads/img')] string $imageDirectory
     ): Response {
         $wish = new Wish();
